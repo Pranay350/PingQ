@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# secrets (never commit these)
+.env
+.env.*
+!.env.example
+
+# runtime data (may hold user and medical details)
+data/event_state.json
+
+# logs
+*.log
+npm-debug.log*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
