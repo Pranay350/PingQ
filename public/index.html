@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PingQ // Intelligent Event Curation & Footfall Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Top Navigation & Global Header -->
+  <header class="top-nav">
+    <div class="nav-brand">
+      <div class="brand-logo">
+        <span class="logo-icon">⚡</span>
+      </div>
+      <div class="brand-info">
+        <div class="brand-title">Ping<span>Q</span></div>
+        <div class="brand-subtitle">LIVE EVENT &amp; QUEUE CURATION</div>
+      </div>
+      <div class="live-pill">
+        <span class="live-dot pulse"></span>
+        <span>LIVE VENUE</span>
+      </div>
+    </div>
+
+    <!-- Mode Selector & Split View -->
+    <div class="nav-modes">
+      <button class="mode-tab active" data-mode="landing" id="tabLandingBtn">
+        <span class="tab-icon">🌐</span> Landing Page
+      </button>
+      <button class="mode-tab" data-mode="consumer" id="tabConsumerBtn">
+        <span class="tab-icon">👤</span> Consumer Portal
+      </button>
+      <button class="mode-tab" data-mode="staff" id="tabStaffBtn">
+        <span class="tab-icon">📊</span> Staff & Admin Hub
+      </button>
+      <button class="mode-tab" data-mode="split" id="tabSplitBtn">
+        <span class="tab-icon">⚡</span> Split Demo View
+      </button>
+    </div>
+
+    <!-- Attendee Switcher & Quick Controls -->
+    <div class="nav-controls">
+      <button class="btn btn-sm btn-lime-auth" id="navDemoLoginBtn" title="Choose Dummy User / Staff Account">
+        <span class="icon">🔑</span> Dummy Login
+      </button>
+
+      <div class="attendee-switcher" id="attendeeSwitcherWrap">
+        <label for="attendeeSelect">Active Profile:</label>
+        <select id="attendeeSelect" class="styled-select">
+          <option value="PQ-7F3K" selected>Aarav S. (TechNova '26 · Band)</option>
+          <option value="PASS-ALEX-8821">Alex Rivera (VIP All-Access)</option>
+          <option value="PASS-PRIYA-4920">Priya Sharma (Standard Pass)</option>
+          <option value="PASS-JORDAN-3104">Jordan Lee (Explorer Pass)</option>
+        </select>
+      </div>
+
+      <button class="btn-icon" id="openSupabaseModalBtn" title="Supabase Database Settings & SQL">
+        <span class="icon">⚡</span>
+        <span class="badge-status-dot online"></span>
+      </button>
+
+      <button class="btn-icon" id="toggleSoundBtn" title="Toggle Audio Feedback">
+        <span class="icon" id="soundIcon">🔊</span>
+      </button>
+
+      <button class="btn-icon" id="resetDemoBtn" title="Reset Demo Data">
+        <span class="icon">🔄</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Flash Alert for Boosted Zones -->
+  <div class="boost-flash-banner" id="boostFlashBanner">
+    <div class="banner-content">
+      <span class="flame-icon">🔥</span>
+      <span class="boost-text" id="boostBannerText">
+        <strong>FLASH ZONE BOOST ACTIVE:</strong> Zone 2 (Stalls 3, 4, 5) is awarding <strong>2.5x REWARD POINTS</strong> on all check-ins!
+      </span>
+      <button class="banner-dismiss" id="dismissBannerBtn">✕</button>
+    </div>
+  </div>
+
+  <!-- Main View Container -->
+  <main class="main-viewport" id="mainViewport">
+    
+    <!-- ========================================== -->
+    <!-- VIEW 0: EDITORIAL LANDING PAGE             -->
+    <!-- ========================================== -->
+    <section class="portal-view active" id="landingPageView">
+      <div class="landing-surface">
+        
+        <!-- Top Editorial Hero Section -->
+        <div class="landing-hero-wrap">
+          <div class="landing-hero-content">
+            <div class="landing-kicker-tag">EVENTS &amp; CAMPUSES · HOSPITALS &amp; CLINICS</div>
+            
+            <h1 class="landing-headline">
+              Scan once.<br>
+              <span class="lime-highlight">Skip the crowd.</span><br>
+              <span class="lime-highlight">Stay safe.</span>
+            </h1>
+
+            <p class="landing-lead">
+              One QR scan gives you a live token, zone check-ins and a one-tap way to call medical help, at a festival stall or a hospital counter.
+            </p>
+
+            <!-- Dummy Login & Interactive Actions -->
+            <div class="landing-auth-ctas">
+              <button class="btn btn-landing-primary" id="heroConsumerLoginBtn">
+                <span class="btn-icon">👤</span> Login as Consumer (Aarav S.)
+              </button>
+              <button class="btn btn-landing-dark" id="heroStaffLoginBtn">
+                <span class="btn-icon">📊</span> Login as Staff Hub (Elena R.)
+              </button>
+              <button class="btn btn-landing-outline" id="heroOpenModalBtn">
+                <span class="btn-icon">🔑</span> Select Dummy Account
+              </button>
+            </div>
+
+            <div class="landing-live-status-bar">
+              <div class="live-status-pill">
+                <span class="live-status-dot"></span>
+                <span>Gate Flow: <strong id="landingGateCount">186 Live Inside</strong></span>
+              </div>
+              <div class="live-status-pill boosted">
+                <span class="live-status-flame">🔥</span>
+                <span id="landingZoneBoostStatus">Zone 2 Boosted (2.5x Points Active)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Right: Wristband / Ticket Card (From Screenshot 1) -->
+          <div class="landing-hero-card-col">
+            <div class="wristband-ticket-card" id="wristbandHeroCard">
+              <div class="wristband-card-header">
+                <span class="wristband-title">TECHNOVA '26 · BAND</span>
+                <span class="wristband-badge">
+                  <span class="badge-square">■</span> CHECKED IN
+                </span>
+              </div>
+
+              <!-- Barcode perforation strip & centered elevated QR code -->
+              <div class="wristband-strip-zone">
+                <div class="wristband-qr-elevation">
+                  <canvas id="heroWristbandQrCanvas" width="136" height="136"></canvas>
+                  <div class="wristband-code-tag">PQ-7F3K</div>
+                </div>
+              </div>
+
+              <!-- Metrics row: HOLDER, POINTS, STALLS -->
+              <div class="wristband-metrics-grid">
+                <div class="wristband-metric-item">
+                  <span class="w-label">HOLDER</span>
+                  <strong class="w-value" id="landingHolderName">Aarav S.</strong>
+                </div>
+                <div class="wristband-metric-item">
+                  <span class="w-label">POINTS</span>
+                  <strong class="w-value" id="landingPointsVal">170</strong>
+                </div>
+                <div class="wristband-metric-item">
+                  <span class="w-label">STALLS</span>
+                  <strong class="w-value" id="landingStallsVal">6/24</strong>
+                </div>
+              </div>
+
+              <!-- Footer boost alert with dotted top line -->
+              <div class="wristband-footer-alert">
+                <span id="landingWristbandAlertText">Art walk is on <strong>2x points</strong> for the next 30 min.</span>
+              </div>
+
+              <div class="wristband-card-action">
+                <button class="btn-wristband-click" id="wristbandEnterPortalBtn">
+                  <span>⚡ Tap Pass to Enter Aarav's Portal →</span>
+                </button>
+                <button class="btn-wristband-emergency" id="heroEmergencyScanBtn" title="Simulate scanning this wristband in a medical emergency">
+                  <span>🚨 Scan Wristband in Medical Emergency →</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Feature Columns (From Screenshot 2 Top) -->
+        <div class="landing-features-row">
+          <!-- Box 1 -->
+          <div class="landing-feature-box">
+            <div class="feat-code">01 · QUEUES</div>
+            <h3 class="feat-heading">Intelligent queues</h3>
+            <p class="feat-summary">Join from your phone. Watch your position fall.</p>
+            <div class="feat-live-indicator">
+              <span class="feat-square">■</span>
+              <span id="featQueueText">81 IN STALL QUEUES NOW</span>
+            </div>
+          </div>
+
+          <!-- Box 2 -->
+          <div class="landing-feature-box">
+            <div class="feat-code">02 · FLOW</div>
+            <h3 class="feat-heading">Crowd &amp; patient flow</h3>
+            <p class="feat-summary">Zones and departments, live, for the people running them.</p>
+            <div class="feat-live-indicator">
+              <span class="feat-square">■</span>
+              <span id="featFlowText">2 ZONES HEAVY · 1107 INSIDE</span>
+            </div>
+          </div>
+
+          <!-- Box 3 -->
+          <div class="landing-feature-box">
+            <div class="feat-code">03 · SAFETY</div>
+            <h3 class="feat-heading">Medical assistance</h3>
+            <p class="feat-summary">One tap sends your location to medics. Details stay locked.</p>
+            <div class="feat-live-indicator">
+              <span class="feat-square">■</span>
+              <span id="featSafetyText">0 OPEN ALERTS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Two Workflows (From Screenshot 2 Bottom) -->
+        <div class="landing-workflows-wrap">
+          <div class="workflows-top-row">
+            <div>
+              <div class="workflows-tag">TWO PLACES · ONE QR</div>
+              <h2 class="workflows-title">Same scan.<br>Two workflows.</h2>
+            </div>
+            <div class="workflows-right-hint">
+              <p>Tap a row to compare. Highlighted side follows the environment you pick.</p>
+              <div class="env-pills">
+                <button class="env-pill-btn active" data-env="events" id="btnEnvEvents">Events &amp; Campuses</button>
+                <button class="env-pill-btn" data-env="hospitals" id="btnEnvHospitals">Hospitals &amp; Clinics</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparison Table Structure -->
+          <div class="workflows-table-container">
+            <div class="workflows-table-head">
+              <span class="th-left">EVENTS &amp; CAMPUSES</span>
+              <span class="th-mid">QR</span>
+              <span class="th-right">HOSPITALS &amp; CLINICS</span>
+            </div>
+
+            <div class="workflows-table-body" id="workflowsTableBody">
+              <!-- Row 1 -->
+              <div class="wf-row active-env-left" data-row="1">
+                <div class="wf-cell cell-left">
+                  <span class="wf-highlight-bar">Gate check-in</span>
+                </div>
+                <div class="wf-cell cell-mid">⇄</div>
+                <div class="wf-cell cell-right">
+                  <span class="wf-highlight-bar">Patient registration</span>
+                </div>
+              </div>
+
+              <!-- Row 2 -->
+              <div class="wf-row active-env-left" data-row="2">
+                <div class="wf-cell cell-left">
+                  <span class="wf-highlight-bar">Event wristband</span>
+                </div>
+                <div class="wf-cell cell-mid">⇄</div>
+                <div class="wf-cell cell-right">
+                  <span class="wf-highlight-bar">Digital QR patient pass</span>
+                </div>
+              </div>
+
+              <!-- Row 3 -->
+              <div class="wf-row active-env-left" data-row="3">
+                <div class="wf-cell cell-left">
+                  <span class="wf-highlight-bar">Stall visits &amp; rewards</span>
+                </div>
+                <div class="wf-cell cell-mid">⇄</div>
+                <div class="wf-cell cell-right">
+                  <span class="wf-highlight-bar">Department check-ins</span>
+                </div>
+              </div>
+
+              <!-- Row 4 -->
+              <div class="wf-row active-env-left" data-row="4">
+                <div class="wf-cell cell-left">
+                  <span class="wf-highlight-bar">Dynamic zone boosting</span>
+                </div>
+                <div class="wf-cell cell-mid">⇄</div>
+                <div class="wf-cell cell-right">
+                  <span class="wf-highlight-bar">Triage &amp; wait-time balancing</span>
+                </div>
+              </div>
+
+              <!-- Row 5 -->
+              <div class="wf-row active-env-left" data-row="5">
+                <div class="wf-cell cell-left">
+                  <span class="wf-highlight-bar">Sponsor footfall analytics</span>
+                </div>
+                <div class="wf-cell cell-mid">⇄</div>
+                <div class="wf-cell cell-right">
+                  <span class="wf-highlight-bar">Capacity &amp; audit validation</span>
+                </div>
+              </div>
+
+              <!-- Row 6 -->
+              <div class="wf-row active-env-left" data-row="6">
+                <div class="wf-cell cell-left">
+                  <span class="wf-highlight-bar">Emergency SOS button</span>
+                </div>
+                <div class="wf-cell cell-mid">⇄</div>
+                <div class="wf-cell cell-right">
+                  <span class="wf-highlight-bar">Rapid medical assistance</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: CONSUMER / USER DASHBOARD          -->
+    <!-- ========================================== -->
+    <section class="portal-view" id="consumerPortalView">
+      <div class="consumer-grid">
+        
+        <!-- Left Column: Digital Pass & Quick Check-in -->
+        <div class="consumer-col left-col">
+          
+          <!-- Attendee Profile & Digital QR Badge -->
+          <div class="card pass-card">
+            <div class="pass-hologram-strip"></div>
+            <div class="pass-header">
+              <div class="pass-chip">EVENT PASS 2026</div>
+              <div class="pass-header-badges">
+                <span class="pass-blood-pill" id="userPassBloodBadge" title="Verified Medical Blood Group">🩸 O+</span>
+                <div class="pass-tier-badge" id="userTierBadge">VIP All-Access</div>
+              </div>
+            </div>
+
+            <div class="pass-user-info">
+              <div class="pass-avatar" id="userAvatar">AR</div>
+              <div class="pass-details">
+                <h2 class="pass-name" id="userName">Alex Rivera</h2>
+                <div class="pass-id-line">
+                  <span class="pass-id-label">PASS ID:</span>
+                  <code class="pass-id-code" id="userPassId">PASS-ALEX-8821</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic QR Code Container -->
+            <div class="pass-qr-wrap">
+              <div class="qr-canvas-frame">
+                <canvas id="userQrCanvas" width="180" height="180"></canvas>
+                <div class="qr-scanner-line"></div>
+              </div>
+              <div class="qr-hint">Scan at Main Gate &amp; Stalls to check-in · Near-field Medical ID embedded</div>
+            </div>
+
+            <div class="pass-footer">
+              <div class="pass-stats">
+                <div class="stat-item">
+                  <span class="stat-label">CHECK-INS</span>
+                  <span class="stat-val" id="userCheckinsCount">5</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">STATUS</span>
+                  <span class="stat-val text-emerald">Verified Inside</span>
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="copyPassIdBtn">📋 Copy Pass ID</button>
+            </div>
+          </div>
+
+          <!-- ATTENDEE MEDICAL ID & EMERGENCY RESPONSE PROFILE -->
+          <div class="card medical-profile-card">
+            <div class="card-header">
+              <div class="header-icon medical-icon">🏥</div>
+              <div>
+                <h3>Emergency Medical ID</h3>
+                <p>Visible only when scanned in Emergency Mode by medics or bystanders</p>
+              </div>
+              <span class="badge badge-medical-safe" title="Near-field medical payload active">🛡️ SOS ACTIVE</span>
+            </div>
+
+            <div class="card-body">
+              <!-- Primary Medical Vitals Grid -->
+              <div class="medical-vitals-grid">
+                <div class="vital-card blood-vital">
+                  <span class="vital-label">BLOOD GROUP</span>
+                  <div class="blood-group-badge-lg" id="consumerBloodGroup">O+</div>
+                  <span class="vital-sub" id="consumerBloodSub">Universal Donor</span>
+                </div>
+                <div class="vital-card">
+                  <span class="vital-label">AGE / GENDER</span>
+                  <div class="vital-val" id="consumerAge">24 yrs</div>
+                  <span class="vital-sub">Adult Attendee</span>
+                </div>
+                <div class="vital-card">
+                  <span class="vital-label">HEIGHT</span>
+                  <div class="vital-val" id="consumerHeight">5' 11"</div>
+                  <span class="vital-sub" id="consumerHeightMetric">180 cm</span>
+                </div>
+                <div class="vital-card">
+                  <span class="vital-label">WEIGHT</span>
+                  <div class="vital-val" id="consumerWeight">72 kg</div>
+                  <span class="vital-sub">Registered</span>
+                </div>
+              </div>
+
+              <!-- Emergency Contact Box -->
+              <div class="emergency-contact-box">
+                <div class="contact-box-header">
+                  <span class="contact-icon">📞</span>
+                  <span class="contact-title">PRIMARY EMERGENCY CONTACT</span>
+                  <span class="contact-badge">AUTO-ALERT SMS</span>
+                </div>
+                <div class="contact-details">
+                  <div class="contact-name-row">
+                    <strong id="consumerContactName">Rohan Sharma</strong>
+                    <span class="contact-relation" id="consumerContactRelation">(Brother / Primary)</span>
+                  </div>
+                  <div class="contact-phone-row">
+                    <span class="phone-number" id="consumerContactPhone">+91 98765 43210</span>
+                    <button class="btn-copy-chip" id="copyContactPhoneBtn" title="Copy phone number">📋 Copy</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Critical Medical Flags & Conditions -->
+              <div class="medical-alerts-box">
+                <div class="med-alert-item">
+                  <span class="med-alert-icon">⚠️</span>
+                  <div class="med-alert-text">
+                    <strong class="text-amber">Critical Allergies:</strong>
+                    <span id="consumerAllergies">Severe Penicillin allergy, Mild tree nut sensitivity</span>
+                  </div>
+                </div>
+                <div class="med-alert-item">
+                  <span class="med-alert-icon">🩺</span>
+                  <div class="med-alert-text">
+                    <strong class="text-sky">Conditions &amp; Notes:</strong>
+                    <span id="consumerConditions">Mild bronchial asthma (Carries rescue inhaler)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Actions for Showcase -->
+              <div class="medical-actions-row">
+                <button class="btn btn-emergency-triage full-width" id="btnOpenResponderPreview">
+                  <span class="btn-icon">🚨</span> Preview Emergency Triage &amp; SOS View
+                </button>
+                <div class="medical-sub-actions">
+                  <button class="btn btn-secondary btn-sm flex-1" id="btnEditMedicalProfile">
+                    <span>✏️ Edit Medical Info</span>
+                  </button>
+                  <button class="btn btn-secondary btn-sm flex-1" id="btnBystanderScanFromConsumer">
+                    <span>🤝 Bystander Scan Badge</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DEMO QR CHECK-IN ACTION STATION -->
+          <div class="card demo-checkin-card">
+            <div class="card-header">
+              <div class="header-icon">⚡</div>
+              <div>
+                <h3>Demo QR Check-In Station</h3>
+                <p>Simulate tapping your pass at any gate or stall</p>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="form-group">
+                <label for="demoLocationSelect">Select Location to Check-in:</label>
+                <select id="demoLocationSelect" class="styled-select full-width">
+                  <option value="main_gate">🚪 Main Gate (Venue Entrance) [+25 pts]</option>
+                  <option value="stall_1">🎪 Stall 1 - HyperTech AI Showcase (Zone 1) [+50 pts]</option>
+                  <option value="stall_2">🤖 Stall 2 - NovaDynamics Robotics Lab (Zone 1) [+50 pts]</option>
+                  <option value="stall_3" selected>🎧 Stall 3 - SonicMedia Creator Studio (Zone 2 - 🔥 Boosted!) [+150 pts]</option>
+                  <option value="stall_4">🎮 Stall 4 - ApexPlay VR & Esports Arena (Zone 2 - 🔥 Boosted!) [+188 pts]</option>
+                  <option value="stall_5">⚡ Stall 5 - VoltMotors Future Mobility (Zone 2 - 🔥 Boosted!) [+125 pts]</option>
+                </select>
+              </div>
+
+              <!-- Location Preview Badge -->
+              <div class="checkin-preview-box" id="checkinPreviewBox">
+                <div class="preview-location-name" id="previewLocName">Stall 3 - SonicMedia Creator Studio</div>
+                <div class="preview-zone-info">
+                  <span class="badge badge-boost" id="previewZoneBadge">🔥 Zone 2 (2.5x Boost Active)</span>
+                  <span class="preview-points" id="previewPointsCalc">+150 Reward Points</span>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-pulse full-width" id="triggerDemoCheckinBtn">
+                <span class="btn-icon">⚡</span> Tap to Check-in with QR Pass
+              </button>
+
+              <div class="checkin-quick-buttons">
+                <span class="quick-label">Fast Jump:</span>
+                <button class="chip-btn" data-loc="main_gate">Main Gate</button>
+                <button class="chip-btn" data-loc="stall_1">Stall 1</button>
+                <button class="chip-btn" data-loc="stall_2">Stall 2</button>
+                <button class="chip-btn" data-loc="stall_3">Stall 3 🔥</button>
+                <button class="chip-btn" data-loc="stall_4">Stall 4 🔥</button>
+                <button class="chip-btn" data-loc="stall_5">Stall 5 🔥</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Wallet, Boost Radar, Event Map, Rewards & History -->
+        <div class="consumer-col right-col">
+          
+          <!-- Reward Points Wallet Card -->
+          <div class="card wallet-card">
+            <div class="wallet-header">
+              <div>
+                <span class="wallet-label">AVAILABLE REWARD POINTS</span>
+                <div class="wallet-balance">
+                  <span class="currency-symbol">💎</span>
+                  <span class="balance-number" id="userPointsBalance">380</span>
+                  <span class="balance-unit">PTS</span>
+                </div>
+              </div>
+              <div class="wallet-lifetime">
+                <span class="sub-label">LIFETIME EARNED</span>
+                <span class="sub-val" id="userLifetimePoints">620 PTS</span>
+              </div>
+            </div>
+
+            <!-- Boosted Zone Radar in Consumer Wallet -->
+            <div class="boost-radar-widget" id="boostRadarWidget">
+              <div class="radar-header">
+                <span class="radar-badge">STRATEGY RADAR</span>
+                <span class="radar-timer">Active Boost Event</span>
+              </div>
+              <div class="radar-body">
+                <div class="radar-icon-box">🔥</div>
+                <div class="radar-details">
+                  <h4 id="radarTitle">Zone 2 is currently Boosted!</h4>
+                  <p id="radarDesc">Visit Stall 3, 4, or 5 to collect <strong>2.5x bonus reward points</strong> per check-in!</p>
+                </div>
+                <button class="btn btn-sm btn-accent" id="radarActionBtn">View Boosted Stalls</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Event Stalls & Zones Guide -->
+          <div class="card stalls-guide-card">
+            <div class="card-header">
+              <div class="header-icon">🗺️</div>
+              <div>
+                <h3>Event Curation Map & Boosted Zones</h3>
+                <p>Check in at sponsor stalls to collect points and unlock rewards</p>
+              </div>
+            </div>
+
+            <div class="stalls-grid-wrap">
+              <!-- Zone 1 -->
+              <div class="zone-block" id="consumerZone1Block">
+                <div class="zone-block-header">
+                  <div class="zone-name-wrap">
+                    <span class="zone-tag">ZONE 1</span>
+                    <span class="zone-desc">Tech & Robotics Pavilion</span>
+                  </div>
+                  <span class="zone-status-badge" id="userZone1Badge">Standard (1.0x)</span>
+                </div>
+                <div class="stalls-card-list">
+                  <div class="stall-mini-card" data-stall="stall_1">
+                    <div class="stall-mini-header">
+                      <span class="stall-num">STALL 1</span>
+                      <span class="stall-pts">+50 PTS</span>
+                    </div>
+                    <div class="stall-mini-name">HyperTech AI Showcase</div>
+                    <div class="stall-mini-sponsor">Sponsor: HyperTech Systems</div>
+                  </div>
+                  <div class="stall-mini-card" data-stall="stall_2">
+                    <div class="stall-mini-header">
+                      <span class="stall-num">STALL 2</span>
+                      <span class="stall-pts">+50 PTS</span>
+                    </div>
+                    <div class="stall-mini-name">NovaDynamics Robotics Lab</div>
+                    <div class="stall-mini-sponsor">Sponsor: NovaDynamics</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zone 2 -->
+              <div class="zone-block boosted" id="consumerZone2Block">
+                <div class="zone-block-header">
+                  <div class="zone-name-wrap">
+                    <span class="zone-tag">ZONE 2</span>
+                    <span class="zone-desc">Creator & Entertainment Hub</span>
+                  </div>
+                  <span class="zone-status-badge boosted" id="userZone2Badge">🔥 BOOSTED (2.5x)</span>
+                </div>
+                <div class="stalls-card-list">
+                  <div class="stall-mini-card boosted" data-stall="stall_3">
+                    <div class="stall-mini-header">
+                      <span class="stall-num">STALL 3</span>
+                      <span class="stall-pts glow-pts">+150 PTS</span>
+                    </div>
+                    <div class="stall-mini-name">SonicMedia Creator Studio</div>
+                    <div class="stall-mini-sponsor">Sponsor: SonicMedia Studios</div>
+                  </div>
+                  <div class="stall-mini-card boosted" data-stall="stall_4">
+                    <div class="stall-mini-header">
+                      <span class="stall-num">STALL 4</span>
+                      <span class="stall-pts glow-pts">+188 PTS</span>
+                    </div>
+                    <div class="stall-mini-name">ApexPlay VR & Esports Arena</div>
+                    <div class="stall-mini-sponsor">Sponsor: ApexPlay Interactive</div>
+                  </div>
+                  <div class="stall-mini-card boosted" data-stall="stall_5">
+                    <div class="stall-mini-header">
+                      <span class="stall-num">STALL 5</span>
+                      <span class="stall-pts glow-pts">+125 PTS</span>
+                    </div>
+                    <div class="stall-mini-name">VoltMotors Future Mobility</div>
+                    <div class="stall-mini-sponsor">Sponsor: VoltMotors Global</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rewards Store / Redeem Points -->
+          <div class="card rewards-store-card">
+            <div class="card-header">
+              <div class="header-icon">🎁</div>
+              <div>
+                <h3>Sponsor Rewards Store</h3>
+                <p>Redeem your earned points for sponsor merchandise and exclusive experiences</p>
+              </div>
+            </div>
+            <div class="rewards-items-grid" id="rewardsCatalogGrid">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <!-- My Check-in Activity Timeline -->
+          <div class="card activity-history-card">
+            <div class="card-header">
+              <div class="header-icon">🕒</div>
+              <div>
+                <h3>My Check-in & Rewards History</h3>
+                <p>Live transaction log linked with Supabase database</p>
+              </div>
+            </div>
+            <div class="activity-timeline" id="userActivityTimeline">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: STAFF & ADMIN COMMAND HUB          -->
+    <!-- ========================================== -->
+    <section class="portal-view" id="staffPortalView">
+      
+      <!-- Key Metric Highlights -->
+      <div class="metrics-row">
+        <!-- Main Gate Live Headcount -->
+        <div class="metric-card highlight-metric">
+          <div class="metric-top">
+            <span class="metric-title">MAIN GATE HEADCOUNT</span>
+            <span class="metric-tag live-tag">● LIVE IN VENUE</span>
+          </div>
+          <div class="metric-value-row">
+            <span class="metric-huge" id="statMainGateHeadcount">184</span>
+            <span class="metric-sub">/ 1,000 CAP</span>
+          </div>
+          <div class="capacity-bar-wrap">
+            <div class="capacity-bar-fill" id="mainGateCapFill" style="width: 18.4%;"></div>
+          </div>
+          <div class="metric-footer">
+            <span>Total Gate Footfall Today: <strong id="statTotalGateFootfall">1,167</strong></span>
+          </div>
+        </div>
+
+        <!-- Zone 1 Live Footfall -->
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">ZONE 1 OCCUPANCY</span>
+            <span class="metric-badge-status" id="zone1AdminBadge">Standard</span>
+          </div>
+          <div class="metric-value-row">
+            <span class="metric-huge" id="statZone1Headcount">49</span>
+            <span class="metric-sub">/ 350 CAP</span>
+          </div>
+          <div class="capacity-bar-wrap">
+            <div class="capacity-bar-fill" id="zone1CapFill" style="width: 14%;"></div>
+          </div>
+          <div class="metric-footer">
+            <span>Stalls 1 & 2 • Footfall: <strong id="statZone1Footfall">383</strong></span>
+          </div>
+        </div>
+
+        <!-- Zone 2 Live Footfall -->
+        <div class="metric-card boosted-border">
+          <div class="metric-top">
+            <span class="metric-title">ZONE 2 OCCUPANCY</span>
+            <span class="metric-badge-status boosted" id="zone2AdminBadge">🔥 2.5x BOOST</span>
+          </div>
+          <div class="metric-value-row">
+            <span class="metric-huge text-amber" id="statZone2Headcount">135</span>
+            <span class="metric-sub">/ 550 CAP</span>
+          </div>
+          <div class="capacity-bar-wrap">
+            <div class="capacity-bar-fill fill-amber" id="zone2CapFill" style="width: 24.5%;"></div>
+          </div>
+          <div class="metric-footer">
+            <span>Stalls 3, 4, 5 • Footfall: <strong id="statZone2Footfall">942</strong></span>
+          </div>
+        </div>
+
+        <!-- Total Validated Sponsor Scans -->
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">SPONSOR VALIDATED SCANS</span>
+            <span class="metric-tag">VERIFIED</span>
+          </div>
+          <div class="metric-value-row">
+            <span class="metric-huge text-cyan" id="statTotalScans">1,325</span>
+            <span class="metric-sub">SCANS</span>
+          </div>
+          <div class="metric-footer">
+            <span>Points Awarded: <strong id="statTotalPointsDistributed">78,450</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Staff Grid: Left (Controls + Scanner) & Right (Venue Floorplan + Sponsor Intel) -->
+      <div class="staff-grid">
+        
+        <!-- Staff Left Column -->
+        <div class="staff-col left-col">
+          
+          <!-- ADMIN ZONE BOOSTING CONTROL PANEL -->
+          <div class="card admin-boost-card">
+            <div class="card-header">
+              <div class="header-icon">🔥</div>
+              <div>
+                <h3>Admin Zone Traffic Control & Dynamic Boosting</h3>
+                <p>Strategic crowd load-balancing & sponsored footfall driver</p>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="strategy-explanation">
+                <span class="info-icon">💡</span>
+                <span><strong>Business Strategy:</strong> Activating a Zone Boost awards multipliers to attendees visiting that zone. Use this to redistribute crowds away from congested areas into under-visited sponsor zones.</span>
+              </div>
+
+              <!-- Zone 1 Control Box -->
+              <div class="boost-control-item" id="zone1ControlBox">
+                <div class="control-item-header">
+                  <div>
+                    <h4>Zone 1: Tech & Robotics Pavilion</h4>
+                    <span class="sub-text">Stalls 1 & 2 (HyperTech, NovaDynamics)</span>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="zone1BoostToggle">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="control-item-multiplier">
+                  <label>Reward Multiplier:</label>
+                  <div class="multiplier-chips" id="zone1MultiplierChips">
+                    <button class="mult-chip" data-val="1.5">1.5x</button>
+                    <button class="mult-chip active" data-val="2.0">2.0x</button>
+                    <button class="mult-chip" data-val="2.5">2.5x</button>
+                    <button class="mult-chip" data-val="3.0">3.0x</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zone 2 Control Box -->
+              <div class="boost-control-item active-boosted" id="zone2ControlBox">
+                <div class="control-item-header">
+                  <div>
+                    <h4>Zone 2: Creator & Entertainment Hub</h4>
+                    <span class="sub-text">Stalls 3, 4, 5 (SonicMedia, ApexPlay, VoltMotors)</span>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="zone2BoostToggle" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="control-item-multiplier">
+                  <label>Reward Multiplier:</label>
+                  <div class="multiplier-chips" id="zone2MultiplierChips">
+                    <button class="mult-chip" data-val="1.5">1.5x</button>
+                    <button class="mult-chip" data-val="2.0">2.0x</button>
+                    <button class="mult-chip active" data-val="2.5">2.5x</button>
+                    <button class="mult-chip" data-val="3.0">3.0x</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="boost-action-footer">
+                <button class="btn btn-primary full-width" id="saveBoostSettingsBtn">
+                  <span>⚡ Apply Zone Boost Strategy to Live Venue</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STAFF QR SCANNING WINDOW / TERMINAL -->
+          <div class="card staff-scanner-card">
+            <div class="card-header">
+              <div class="header-icon">📷</div>
+              <div>
+                <h3>Staff Scanning Interface</h3>
+                <p>Check in attendees & commit directly to Supabase</p>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="form-group">
+                <label for="scannerStationSelect">Staff Check-In Gate / Stall Station:</label>
+                <select id="scannerStationSelect" class="styled-select full-width">
+                  <option value="main_gate">Main Gate (Entry Headcount)</option>
+                  <option value="stall_1">Stall 1 - HyperTech AI Showcase (Zone 1)</option>
+                  <option value="stall_2">Stall 2 - NovaDynamics Robotics Lab (Zone 1)</option>
+                  <option value="stall_3">Stall 3 - SonicMedia Creator Studio (Zone 2)</option>
+                  <option value="stall_4">Stall 4 - ApexPlay VR Arena (Zone 2)</option>
+                  <option value="stall_5">Stall 5 - VoltMotors Mobility (Zone 2)</option>
+                </select>
+              </div>
+
+              <!-- Scan Mode Selector -->
+              <div class="staff-mode-switch-row">
+                <button class="mode-tab-btn active" id="staffModeNormalBtn">
+                  <span>🏷️ Standard Gate / Stall Check-In</span>
+                </button>
+                <button class="mode-tab-btn emergency" id="staffModeEmergencyBtn">
+                  <span>🚨 Emergency / Medical Triage Scan</span>
+                </button>
+              </div>
+
+              <!-- Scanner Viewfinder Simulation -->
+              <div class="scanner-viewfinder" id="staffScannerViewfinder">
+                <div class="reticle-corner top-left"></div>
+                <div class="reticle-corner top-right"></div>
+                <div class="reticle-corner bottom-left"></div>
+                <div class="reticle-corner bottom-right"></div>
+                <div class="laser-beam" id="staffLaserBeam"></div>
+
+                <div class="viewfinder-status">
+                  <span class="live-dot pulse" id="scannerLiveDot"></span>
+                  <span id="scannerStatusText">OPTICAL RETICLE ACTIVE</span>
+                </div>
+
+                <div class="viewfinder-center-target">
+                  <span class="target-icon">⛶</span>
+                </div>
+              </div>
+
+              <!-- Fast Quick-Scan Buttons for Demo -->
+              <div class="scan-input-row">
+                <div class="input-wrap flex-1">
+                  <input type="text" id="manualPassInput" class="styled-input" placeholder="Type or scan Pass ID (e.g. PQ-7F3K or PASS-ALEX-8821)" value="PQ-7F3K">
+                </div>
+                <button class="btn btn-accent" id="submitScanBtn">
+                  <span>Scan &amp; Check In</span>
+                </button>
+                <button class="btn btn-emergency-pulse" id="btnStaffEmergencyScan" title="Scan QR to open Medical Triage &amp; Alert Contacts">
+                  <span>🚨 Emergency Scan</span>
+                </button>
+              </div>
+
+              <div class="quick-attendee-chips">
+                <span class="quick-label">Fast Attendee:</span>
+                <button class="chip-btn" data-pass="PQ-7F3K">Aarav (O+)</button>
+                <button class="chip-btn" data-pass="PASS-ALEX-8821">Alex (A-)</button>
+                <button class="chip-btn" data-pass="PASS-PRIYA-4920">Priya (B+)</button>
+                <button class="chip-btn" data-pass="PASS-JORDAN-3104">Jordan (AB+)</button>
+              </div>
+
+              <!-- Live Feedback on Scan -->
+              <div class="scan-result-card" id="scanResultFeedback" style="display: none;">
+                <div class="result-badge success">✓ CHECK-IN COMMITTED</div>
+                <div class="result-details">
+                  <div class="res-attendee" id="resAttendeeName">Alex Rivera</div>
+                  <div class="res-loc" id="resLocName">Stall 4 (ApexPlay VR)</div>
+                  <div class="res-pts text-emerald" id="resPtsAwarded">+188 PTS (Boosted 2.5x)</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Staff Right Column: Venue Floorplan & Sponsor Intel -->
+        <div class="staff-col right-col">
+          
+          <!-- LIVE VENUE FLOORPLAN & HEATMAP -->
+          <div class="card floorplan-card">
+            <div class="card-header">
+              <div class="header-icon">🏢</div>
+              <div>
+                <h3>Live Floorplan & Stall Headcounts</h3>
+                <p>Real-time occupancy and crowd distribution across zones</p>
+              </div>
+            </div>
+
+            <div class="floorplan-layout">
+              
+              <!-- Main Gate Barrier -->
+              <div class="floorplan-entrance" id="fpMainGate">
+                <div class="entrance-bar">
+                  <span class="gate-icon">🚪</span>
+                  <div class="gate-info">
+                    <strong>MAIN VENUE ENTRANCE GATE</strong>
+                    <span>Live Attendees Inside: <strong id="fpMainHeadcount">184</strong></span>
+                  </div>
+                  <span class="gate-badge">CHECK-IN PORTAL</span>
+                </div>
+              </div>
+
+              <!-- Zone 1 Layout Box -->
+              <div class="floorplan-zone-box" id="fpZone1Box">
+                <div class="fp-zone-header">
+                  <div class="fp-zone-title">
+                    <span class="zone-pill">ZONE 1</span>
+                    <strong>Tech & Robotics Pavilions</strong>
+                  </div>
+                  <div class="fp-zone-stats">
+                    <span>Headcount: <strong id="fpZone1Count">49</strong></span>
+                    <span class="status-pill" id="fpZone1Status">Normal Traffic</span>
+                  </div>
+                </div>
+
+                <div class="fp-stalls-row">
+                  <!-- Stall 1 -->
+                  <div class="fp-stall-node" id="nodeStall1">
+                    <div class="stall-node-header">
+                      <span class="node-num">STALL 1</span>
+                      <span class="node-live" id="stall1LivePill">28 Live</span>
+                    </div>
+                    <div class="node-name">HyperTech AI Showcase</div>
+                    <div class="node-sponsor">HyperTech Systems</div>
+                    <div class="node-bar">
+                      <div class="node-bar-fill" id="stall1NodeBar" style="width: 23%;"></div>
+                    </div>
+                    <div class="node-footfall">Total Footfall: <span id="stall1TotalFootfall">215</span></div>
+                  </div>
+
+                  <!-- Stall 2 -->
+                  <div class="fp-stall-node" id="nodeStall2">
+                    <div class="stall-node-header">
+                      <span class="node-num">STALL 2</span>
+                      <span class="node-live" id="stall2LivePill">21 Live</span>
+                    </div>
+                    <div class="node-name">NovaDynamics Robotics Lab</div>
+                    <div class="node-sponsor">NovaDynamics</div>
+                    <div class="node-bar">
+                      <div class="node-bar-fill" id="stall2NodeBar" style="width: 21%;"></div>
+                    </div>
+                    <div class="node-footfall">Total Footfall: <span id="stall2TotalFootfall">168</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zone 2 Layout Box -->
+              <div class="floorplan-zone-box boosted" id="fpZone2Box">
+                <div class="fp-zone-header">
+                  <div class="fp-zone-title">
+                    <span class="zone-pill boosted">ZONE 2 🔥</span>
+                    <strong>Creator & Entertainment Hub</strong>
+                  </div>
+                  <div class="fp-zone-stats">
+                    <span>Headcount: <strong id="fpZone2Count" class="text-amber">135</strong></span>
+                    <span class="status-pill boosted" id="fpZone2Status">🔥 FLASH BOOSTED (2.5x)</span>
+                  </div>
+                </div>
+
+                <div class="fp-stalls-row">
+                  <!-- Stall 3 -->
+                  <div class="fp-stall-node boosted" id="nodeStall3">
+                    <div class="stall-node-header">
+                      <span class="node-num">STALL 3</span>
+                      <span class="node-live text-amber" id="stall3LivePill">46 Live</span>
+                    </div>
+                    <div class="node-name">SonicMedia Creator Studio</div>
+                    <div class="node-sponsor">SonicMedia Studios</div>
+                    <div class="node-bar">
+                      <div class="node-bar-fill fill-amber" id="stall3NodeBar" style="width: 30.6%;"></div>
+                    </div>
+                    <div class="node-footfall">Total Footfall: <span id="stall3TotalFootfall">312</span></div>
+                  </div>
+
+                  <!-- Stall 4 -->
+                  <div class="fp-stall-node boosted" id="nodeStall4">
+                    <div class="stall-node-header">
+                      <span class="node-num">STALL 4</span>
+                      <span class="node-live text-amber" id="stall4LivePill">59 Live</span>
+                    </div>
+                    <div class="node-name">ApexPlay VR Arena</div>
+                    <div class="node-sponsor">ApexPlay Interactive</div>
+                    <div class="node-bar">
+                      <div class="node-bar-fill fill-amber" id="stall4NodeBar" style="width: 32.7%;"></div>
+                    </div>
+                    <div class="node-footfall">Total Footfall: <span id="stall4TotalFootfall">384</span></div>
+                  </div>
+
+                  <!-- Stall 5 -->
+                  <div class="fp-stall-node boosted" id="nodeStall5">
+                    <div class="stall-node-header">
+                      <span class="node-num">STALL 5</span>
+                      <span class="node-live text-amber" id="stall5LivePill">30 Live</span>
+                    </div>
+                    <div class="node-name">VoltMotors Mobility</div>
+                    <div class="node-sponsor">VoltMotors Global</div>
+                    <div class="node-bar">
+                      <div class="node-bar-fill fill-amber" id="stall5NodeBar" style="width: 25%;"></div>
+                    </div>
+                    <div class="node-footfall">Total Footfall: <span id="stall5TotalFootfall">246</span></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- SPONSOR FOOTFALL VALIDATION & ANALYTICS -->
+          <div class="card sponsor-validation-card">
+            <div class="card-header">
+              <div class="header-icon">📈</div>
+              <div class="flex-1">
+                <h3>Sponsor Footfall Validation</h3>
+                <p>Audited proof of stall engagement for sponsors & ROI validation</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="exportCsvBtn">
+                <span>📥 Export CSV Report</span>
+              </button>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table" id="sponsorValidationTable">
+                <thead>
+                  <tr>
+                    <th>Stall & Sponsor</th>
+                    <th>Zone</th>
+                    <th>Live Headcount</th>
+                    <th>Total Footfall</th>
+                    <th>Verified Scans</th>
+                    <th>Unique Visitors</th>
+                    <th>Validation Status</th>
+                  </tr>
+                </thead>
+                <tbody id="sponsorTableBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- LIVE DATABASE AUDIT STREAM (SUPABASE / LOCAL) -->
+          <div class="card database-feed-card">
+            <div class="card-header">
+              <div class="header-icon">⚡</div>
+              <div class="flex-1">
+                <h3>Live Check-In Database Stream</h3>
+                <p>Real-time audit log of check-in events</p>
+              </div>
+              <span class="db-sync-badge" id="dbSyncBadge">⚡ SYNCED</span>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table compact-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Attendee</th>
+                    <th>Pass ID</th>
+                    <th>Location</th>
+                    <th>Zone Multiplier</th>
+                    <th>Points</th>
+                    <th>Database Status</th>
+                  </tr>
+                </thead>
+                <tbody id="liveAuditFeedBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: DUMMY AUTH & ACCOUNT SELECTOR       -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="authModalBackdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🔑</span>
+          <div>
+            <h3>Sign In // Dummy Account Selector</h3>
+            <p>Select a simulated attendee or staff identity to explore the system</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeAuthModalBtn">✕</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-auth-tab="consumer" id="authTabConsumerBtn">
+          <span>👤</span> Consumer / Attendee
+        </button>
+        <button class="modal-tab" data-auth-tab="staff" id="authTabStaffBtn">
+          <span>🛡️</span> Staff &amp; Organizer
+        </button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Tab 1: Consumer Login -->
+        <div class="auth-tab-pane active" id="paneAuthConsumer">
+          <p class="auth-helper-note">Select a pre-configured attendee to test the digital pass, points wallet, and QR check-in:</p>
+          
+          <div class="dummy-account-cards">
+            <!-- Aarav S. (Featured from screenshot) -->
+            <div class="dummy-acc-card selected" data-user-pass="PQ-7F3K">
+              <div class="acc-card-top">
+                <div class="acc-avatar">AS</div>
+                <div class="acc-details">
+                  <h4>Aarav S. <span class="badge-featured">Featured</span></h4>
+                  <span class="acc-tier">TechNova '26 · Band</span>
+                </div>
+                <span class="acc-pts text-emerald">170 PTS</span>
+              </div>
+              <div class="acc-card-footer">
+                <code>Pass ID: PQ-7F3K</code>
+                <span>6/24 Stalls Visited</span>
+              </div>
+            </div>
+
+            <!-- Alex Rivera (VIP) -->
+            <div class="dummy-acc-card" data-user-pass="PASS-ALEX-8821">
+              <div class="acc-card-top">
+                <div class="acc-avatar">AR</div>
+                <div class="acc-details">
+                  <h4>Alex Rivera</h4>
+                  <span class="acc-tier">VIP All-Access Pass</span>
+                </div>
+                <span class="acc-pts text-emerald">580 PTS</span>
+              </div>
+              <div class="acc-card-footer">
+                <code>Pass ID: PASS-ALEX-8821</code>
+                <span>8 Stalls Visited</span>
+              </div>
+            </div>
+
+            <!-- Priya Sharma -->
+            <div class="dummy-acc-card" data-user-pass="PASS-PRIYA-4920">
+              <div class="acc-card-top">
+                <div class="acc-avatar">PS</div>
+                <div class="acc-details">
+                  <h4>Priya Sharma</h4>
+                  <span class="acc-tier">Standard Pass</span>
+                </div>
+                <span class="acc-pts text-emerald">190 PTS</span>
+              </div>
+              <div class="acc-card-footer">
+                <code>Pass ID: PASS-PRIYA-4920</code>
+                <span>3 Stalls Visited</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 14px;">
+            <label for="dummyPassInput">Selected Pass Code / PIN:</label>
+            <input type="text" id="dummyPassInput" class="styled-input full-width" value="PQ-7F3K" readonly>
+          </div>
+
+          <button class="btn btn-primary full-width" id="confirmConsumerLoginBtn">
+            <span>🚀 Enter Consumer Dashboard as <span id="loginSelectedName">Aarav S.</span></span>
+          </button>
+        </div>
+
+        <!-- Tab 2: Staff Login -->
+        <div class="auth-tab-pane" id="paneAuthStaff">
+          <p class="auth-helper-note">Select a staff or organizer identity to access real-time live headcounts, zone boosting, and scanner terminals:</p>
+
+          <div class="dummy-account-cards">
+            <!-- Elena Rostova -->
+            <div class="dummy-acc-card selected" data-staff-id="STAFF-ADMIN-01">
+              <div class="acc-card-top">
+                <div class="acc-avatar staff-avatar">ER</div>
+                <div class="acc-details">
+                  <h4>Elena Rostova <span class="badge-featured staff">Lead Admin</span></h4>
+                  <span class="acc-tier">Lead Event Curator</span>
+                </div>
+                <span class="acc-role-badge">ALL ACCESS</span>
+              </div>
+              <div class="acc-card-footer">
+                <code>ID: STAFF-ADMIN-01</code>
+                <span>Full Venue &amp; Boost Control</span>
+              </div>
+            </div>
+
+            <!-- Gate Supervisor -->
+            <div class="dummy-acc-card" data-staff-id="STAFF-GATE-02">
+              <div class="acc-card-top">
+                <div class="acc-avatar staff-avatar">GS</div>
+                <div class="acc-details">
+                  <h4>Marcus Vance</h4>
+                  <span class="acc-tier">Main Gate Operations</span>
+                </div>
+                <span class="acc-role-badge">GATEWAY</span>
+              </div>
+              <div class="acc-card-footer">
+                <code>ID: STAFF-GATE-02</code>
+                <span>Entry Headcount &amp; Flow</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 14px;">
+            <label for="dummyAdminKeyInput">Security Passcode:</label>
+            <input type="password" id="dummyAdminKeyInput" class="styled-input full-width" value="••••••••" readonly>
+          </div>
+
+          <button class="btn btn-accent full-width" id="confirmStaffLoginBtn">
+            <span>🛡️ Enter Staff Command Hub &amp; Live Analytics</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: SUPABASE SETTINGS & SCHEMA VIEWER   -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="supabaseModalBackdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">⚡</span>
+          <div>
+            <h3>Supabase Integration & Database Settings</h3>
+            <p>Connect your Supabase project or view PostgreSQL schema</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeSupabaseModalBtn">✕</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="credentials" id="tabCredsBtn">Connection Config</button>
+        <button class="modal-tab" data-tab="schema" id="tabSchemaBtn">SQL Schema (Ready to Run)</button>
+        <button class="modal-tab" data-tab="instructions" id="tabDocsBtn">Setup Guide</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Tab 1: Credentials -->
+        <div class="tab-pane active" id="paneCreds">
+          <div class="notice-box info">
+            <span>The prototype runs with an integrated real-time reactive engine out of the box. To connect directly to your cloud Supabase instance, enter your credentials below.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="sbUrlInput">Supabase Project URL:</label>
+            <input type="text" id="sbUrlInput" class="styled-input full-width" placeholder="https://your-project.supabase.co">
+          </div>
+
+          <div class="form-group">
+            <label for="sbKeyInput">Supabase Anon Key:</label>
+            <input type="password" id="sbKeyInput" class="styled-input full-width" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+          </div>
+
+          <div class="connection-status-row">
+            <div class="status-indicator">
+              <span class="status-dot online"></span>
+              <span id="sbConnectionStatusText">Local Mock Database Active (Zero Setup Required)</span>
+            </div>
+            <button class="btn btn-primary btn-sm" id="saveSupabaseCredsBtn">Save & Connect</button>
+          </div>
+        </div>
+
+        <!-- Tab 2: SQL Schema -->
+        <div class="tab-pane" id="paneSchema">
+          <div class="schema-actions-bar">
+            <span>Copy this SQL script into your Supabase SQL Editor:</span>
+            <button class="btn btn-secondary btn-sm" id="copySchemaBtn">📋 Copy SQL Schema</button>
+          </div>
+          <pre class="schema-code-block" id="schemaCodeText"><code>-- Loading schema...</code></pre>
+        </div>
+
+        <!-- Tab 3: Instructions -->
+        <div class="tab-pane" id="paneInstructions">
+          <ol class="setup-steps-list">
+            <li><strong>Create Supabase Project:</strong> Go to <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> and create a free project.</li>
+            <li><strong>Run Schema:</strong> Open the Supabase SQL Editor and run the script provided in the <strong>SQL Schema</strong> tab.</li>
+            <li><strong>Enable Realtime:</strong> The script automatically executes <code>ALTER PUBLICATION supabase_realtime ADD TABLE checkins, zones;</code>.</li>
+            <li><strong>Copy Credentials:</strong> Copy your Project URL & Anon Key from Settings &gt; API and paste them in the <strong>Connection Config</strong> tab.</li>
+          </ol>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Reward Claim Success Voucher Modal -->
+  <div class="modal-backdrop" id="voucherModalBackdrop">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🎉</span>
+          <div>
+            <h3>Reward Claimed!</h3>
+            <p>Show this voucher code to the sponsor stall</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeVoucherModalBtn">✕</button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="voucher-reward-title" id="voucherTitle">Reward Title</div>
+        <div class="voucher-code-box">
+          <span class="code-label">REDEEM VOUCHER CODE</span>
+          <div class="voucher-code" id="voucherCodeDisplay">SPONSOR-8472-EXP</div>
+        </div>
+        <div class="voucher-qr-wrap">
+          <canvas id="voucherQrCanvas" width="140" height="140"></canvas>
+        </div>
+        <p class="voucher-note">Present at the sponsor booth to collect your reward. Deducted <span id="voucherPointsSpent">150</span> points.</p>
+        <button class="btn btn-primary full-width" id="voucherDoneBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: EMERGENCY MEDICAL TRIAGE & DISPATCH -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop modal-emergency-theme" id="emergencyModalBackdrop">
+    <div class="modal-dialog modal-emergency-dialog">
+      <!-- High-visibility Siren Header -->
+      <div class="emergency-modal-banner">
+        <div class="banner-siren-strip">
+          <span class="siren-pulse-dot"></span>
+          <span class="siren-text">EMERGENCY FIRST RESPONDER &amp; TRIAGE VIEW</span>
+          <span class="siren-pulse-dot"></span>
+        </div>
+        <div class="modal-header emergency-header">
+          <div class="modal-title-wrap">
+            <span class="modal-icon emergency-pulsing-icon">🚨</span>
+            <div>
+              <h3 id="emgModalTitle">Patient Medical Emergency ID</h3>
+              <p>Decrypted Near-Field Token Scan · PingQ Event Safety Mesh</p>
+            </div>
+          </div>
+          <button class="modal-close-btn" id="closeEmergencyModalBtn">✕</button>
+        </div>
+      </div>
+
+      <div class="modal-body emergency-body">
+        <!-- Patient Banner with Identity & Location -->
+        <div class="patient-id-strip">
+          <div class="patient-avatar-badge" id="emgPatientAvatar">AS</div>
+          <div class="patient-meta">
+            <div class="patient-name-row">
+              <h2 class="patient-name" id="emgPatientName">Aarav S.</h2>
+              <code class="patient-pass-id" id="emgPatientPassId">PQ-7F3K</code>
+              <span class="badge badge-emergency-triage" id="emgTriageLevel">CODE RED · PRIORITY 1</span>
+            </div>
+            <div class="patient-incident-location">
+              <span class="location-icon">📍</span>
+              <span>Incident Location: <strong id="emgIncidentLocName">Stall 4 - ApexPlay VR Arena (Zone 2)</strong></span>
+              <span class="gps-coords" id="emgGpsCoords">28.5492° N, 77.2023° E</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- High-Impact Vitals Matrix -->
+        <div class="emergency-vitals-matrix">
+          <!-- Blood Group Highlight Card -->
+          <div class="vital-hero-box blood-hero-box">
+            <div class="vital-hero-label">🩸 BLOOD GROUP</div>
+            <div class="blood-group-hero" id="emgBloodGroup">O+</div>
+            <div class="vital-hero-sub" id="emgBloodSub">Universal Donor (RBC)</div>
+          </div>
+
+          <div class="vitals-secondary-grid">
+            <div class="emg-vital-chip">
+              <span class="chip-label">AGE</span>
+              <span class="chip-val" id="emgAge">24 Yrs</span>
+            </div>
+            <div class="emg-vital-chip">
+              <span class="chip-label">HEIGHT</span>
+              <span class="chip-val" id="emgHeight">5' 11" (180 cm)</span>
+            </div>
+            <div class="emg-vital-chip">
+              <span class="chip-label">WEIGHT</span>
+              <span class="chip-val" id="emgWeight">72 kg</span>
+            </div>
+            <div class="emg-vital-chip">
+              <span class="chip-label">ORGAN DONOR</span>
+              <span class="chip-val text-emerald" id="emgOrganDonor">Registered ✓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Critical Medical Alerts Banner (Allergies & Inhaler/EpiPen) -->
+        <div class="emergency-warnings-card">
+          <div class="warning-row">
+            <div class="warning-icon-pill alert-red">⚠️ ALLERGIES</div>
+            <div class="warning-content">
+              <strong id="emgAllergies">Severe Penicillin allergy, Mild tree nut sensitivity</strong>
+              <span class="warning-detail">DO NOT administer beta-lactam antibiotics. Observe for anaphylaxis.</span>
+            </div>
+          </div>
+          <div class="warning-row">
+            <div class="warning-icon-pill alert-amber">🩺 CONDITIONS</div>
+            <div class="warning-content">
+              <strong id="emgConditions">Mild bronchial asthma (Carries rescue inhaler in jacket pocket)</strong>
+              <span class="warning-detail" id="emgMedicalNotes">Patient carries standard albuterol inhaler in backpack side pouch.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary Emergency Contact Card -->
+        <div class="emergency-contact-card">
+          <div class="contact-card-header">
+            <div>
+              <span class="sec-label">PRIMARY EMERGENCY CONTACT</span>
+              <h4 id="emgContactName">Rohan Sharma <span class="contact-rel-pill" id="emgContactRelation">Brother / Emergency Primary</span></h4>
+            </div>
+            <div class="contact-phone-display" id="emgContactPhone">+91 98765 43210</div>
+          </div>
+
+          <!-- Alert Dispatch Notification Status Box -->
+          <div class="alert-status-live-box" id="emgAlertStatusBox">
+            <div class="status-indicator-row">
+              <span class="live-dot-pulse-amber" id="emgAlertDot"></span>
+              <span class="status-headline" id="emgAlertHeadline">Emergency Contacts Ready to be Alerted</span>
+            </div>
+            <div class="status-subtext" id="emgAlertSubtext">
+              Tap the button below to dispatch live SMS with GPS coordinates &amp; notify on-site medical staff.
+            </div>
+
+            <!-- Simulated SMS Preview Box (expands upon dispatch) -->
+            <div class="simulated-sms-preview" id="simulatedSmsPreview" style="display: none;">
+              <div class="sms-preview-header">
+                <span class="sms-icon">💬</span>
+                <span>SIMULATED OUTGOING SMS · DELIVERED VIA PINGQ DISPATCH MESH</span>
+                <span class="sms-time" id="smsSentTime">12:34 PM</span>
+              </div>
+              <div class="sms-bubble">
+                🚨 <strong>PINGQ EMERGENCY ALERT:</strong> <span id="smsPatientName">Aarav S.</span> has been scanned in a medical emergency at <span id="smsLocation">Stall 4 (ApexPlay VR Arena)</span>. First responders are on-scene. Blood Group: <span id="smsBlood">O+</span>. Venue GPS: <span id="smsGps">28.5492° N, 77.2023° E</span>.
+              </div>
+              <div class="sms-receipt text-emerald">
+                ✓ SMS Confirmed Delivered to <span id="smsPhoneNum">+91 98765 43210</span> (Carrier ACK: 200 OK)
+              </div>
+            </div>
+
+            <!-- Paramedic Dispatch Timeline (expands on unit dispatch) -->
+            <div class="paramedic-timeline-card" id="paramedicTimelineCard" style="display: none;">
+              <div class="timeline-header">
+                <span class="paramedic-badge">🚑 PARAMEDIC DISPATCH ACTIVE</span>
+                <span class="eta-pill" id="paramedicEta">ETA: 60 SEC</span>
+              </div>
+              <div class="timeline-step done">
+                <span class="step-check">✓</span>
+                <span>Incident Triaged at <span id="paramedicLoc">Stall 4</span></span>
+              </div>
+              <div class="timeline-step in-progress">
+                <span class="step-pulse">●</span>
+                <span><strong>Unit #2 (Zone 2 Station)</strong> en route with Officer Verma</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons for Showcase -->
+          <div class="emergency-action-grid">
+            <button class="btn btn-emergency-sms" id="btnDispatchEmergencySms">
+              <span class="btn-icon">📲</span> Alert Contacts via Instant SOS (SMS + GPS)
+            </button>
+            <button class="btn btn-emergency-medic" id="btnDispatchParamedic">
+              <span class="btn-icon">🚑</span> Dispatch On-Site Paramedic Unit
+            </button>
+            <button class="btn btn-emergency-call" id="btnCallEmergencyContact">
+              <span class="btn-icon">📞</span> Simulate Direct Call
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer emergency-footer">
+        <button class="btn btn-outline-danger btn-sm" id="btnResolveEmergency">
+          <span>✓ Resolve Incident &amp; Clear Alerts</span>
+        </button>
+        <button class="btn btn-secondary btn-sm" id="btnDismissEmergencyModal">
+          <span>Dismiss Window</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: EDIT ATTENDEE MEDICAL ID (DEMO)     -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="editMedicalModalBackdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">✏️</span>
+          <div>
+            <h3>Edit Medical Emergency ID</h3>
+            <p>Update vitals, blood group &amp; emergency contacts for active profile</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeEditMedicalModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="editMedicalForm" onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="editBloodGroup">Blood Group:</label>
+              <select id="editBloodGroup" class="styled-select full-width">
+                <option value="O+">O Positive (O+)</option>
+                <option value="O-">O Negative (O-)</option>
+                <option value="A+">A Positive (A+)</option>
+                <option value="A-">A Negative (A-)</option>
+                <option value="B+">B Positive (B+)</option>
+                <option value="B-">B Negative (B-)</option>
+                <option value="AB+">AB Positive (AB+)</option>
+                <option value="AB-">AB Negative (AB-)</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label for="editAge">Age (Years):</label>
+              <input type="number" id="editAge" class="styled-input full-width" min="1" max="120" value="24">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="editHeight">Height (e.g. 5' 11" / 180 cm):</label>
+              <input type="text" id="editHeight" class="styled-input full-width" value="5' 11&quot; (180 cm)">
+            </div>
+            <div class="form-group flex-1">
+              <label for="editWeight">Weight (e.g. 72 kg):</label>
+              <input type="text" id="editWeight" class="styled-input full-width" value="72 kg">
+            </div>
+          </div>
+
+          <div class="form-section-title">Emergency Contact Details:</div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="editContactName">Contact Full Name:</label>
+              <input type="text" id="editContactName" class="styled-input full-width" value="Rohan Sharma">
+            </div>
+            <div class="form-group flex-1">
+              <label for="editContactRelation">Relationship:</label>
+              <input type="text" id="editContactRelation" class="styled-input full-width" value="Brother / Emergency Primary">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editContactPhone">Emergency Phone Number:</label>
+            <input type="tel" id="editContactPhone" class="styled-input full-width" value="+91 98765 43210">
+          </div>
+
+          <div class="form-group">
+            <label for="editAllergies">Critical Allergies &amp; Drug Sensitivities:</label>
+            <input type="text" id="editAllergies" class="styled-input full-width" value="Severe Penicillin allergy, Mild tree nut sensitivity">
+          </div>
+
+          <div class="form-group">
+            <label for="editConditions">Chronic Conditions / Inhaler / Notes:</label>
+            <textarea id="editConditions" class="styled-textarea full-width" rows="2">Mild bronchial asthma (Carries rescue inhaler in jacket pocket)</textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelEditMedicalBtn">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveMedicalProfileBtn">Save Medical ID Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: SIMULATED EMERGENCY CALL OVERLAY    -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="emergencyCallModalBackdrop">
+    <div class="modal-dialog modal-dialer-dialog">
+      <div class="dialer-screen">
+        <div class="dialer-caller-avatar" id="callAvatar">RS</div>
+        <div class="dialer-caller-name" id="callName">Rohan Sharma</div>
+        <div class="dialer-caller-number" id="callNumber">+91 98765 43210</div>
+        <div class="dialer-status" id="callStatusText">Connecting via PingQ Emergency Relay...</div>
+
+        <div class="dialer-waves">
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+          <span class="wave-bar"></span>
+        </div>
+
+        <div class="dialer-timer" id="callTimer" style="display: none;">00:04</div>
+
+        <div class="dialer-actions">
+          <button class="btn-end-call" id="btnEndEmergencyCall">
+            <span>🔴 End Call</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: BYSTANDER EMERGENCY QR SCANNER      -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="bystanderScanModalBackdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon emergency-pulsing-icon">🤝</span>
+          <div>
+            <h3>Bystander Emergency Scanner</h3>
+            <p>Scan someone's wristband in an emergency to view their medical profile</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeBystanderScanModalBtn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="bystander-instructions">
+          If someone is unresponsive, injured, or having an allergic reaction at the event, scan their PingQ QR token to immediately see blood type, emergency contacts, and dispatch medics.
+        </p>
+
+        <!-- Viewfinder -->
+        <div class="scanner-viewfinder emergency-viewfinder">
+          <div class="reticle-corner top-left reticle-red"></div>
+          <div class="reticle-corner top-right reticle-red"></div>
+          <div class="reticle-corner bottom-left reticle-red"></div>
+          <div class="reticle-corner bottom-right reticle-red"></div>
+          <div class="laser-beam laser-red"></div>
+
+          <div class="viewfinder-status">
+            <span class="live-dot pulse-red"></span>
+            <span>EMERGENCY OPTICAL RETICLE READY</span>
+          </div>
+
+          <div class="viewfinder-center-target">
+            <span class="target-icon">⛶</span>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 1rem;">
+          <label for="bystanderPassInput">Enter or Scan Wristband Pass ID:</label>
+          <div class="scan-input-row">
+            <input type="text" id="bystanderPassInput" class="styled-input flex-1" placeholder="e.g. PQ-7F3K" value="PQ-7F3K">
+            <button class="btn btn-emergency-pulse" id="btnBystanderScanConfirm">
+              <span>🚨 Scan &amp; Open ID</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="quick-attendee-chips">
+          <span class="quick-label">Tap Someone in Distress (Demo):</span>
+          <button class="chip-btn" data-bystander-pass="PQ-7F3K">Aarav S. (O+)</button>
+          <button class="chip-btn" data-bystander-pass="PASS-ALEX-8821">Alex Rivera (A-)</button>
+          <button class="chip-btn" data-bystander-pass="PASS-PRIYA-4920">Priya Sharma (B+)</button>
+          <button class="chip-btn" data-bystander-pass="PASS-JORDAN-3104">Jordan Lee (AB+)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications Container -->
+  <div class="toast-stack" id="toastStack"></div>
+
+  <!-- Canvas for Confetti particle effects -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="app.js"></script>
+</body>
+</html>

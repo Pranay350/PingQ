@@ -1,0 +1,21 @@
+{
+  "name": "pingq-event-platform",
+  "version": "1.0.0",
+  "description": "Full-fledged Event Curation & Footfall Tracking Platform with Dynamic Zone Boosting, Sponsor Validation, and QR Rewards",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "event-curation",
+    "footfall-tracking",
+    "headcount",
+    "zone-boost",
+    "rewards",
+    "supabase",
+    "qr-checkin"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}

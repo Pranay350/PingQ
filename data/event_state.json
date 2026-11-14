@@ -1,0 +1,287 @@
+{
+  "main_gate": {
+    "id": "main_gate",
+    "name": "Main Gate (Venue Entrance)",
+    "live_headcount": 185,
+    "total_footfall": 1168,
+    "capacity": 1000,
+    "base_points": 25
+  },
+  "zones": {
+    "zone_1": {
+      "id": "zone_1",
+      "name": "Zone 1: Tech & Robotics Pavilions",
+      "description": "Emerging tech, autonomous systems & interactive hardware labs.",
+      "is_boosted": false,
+      "boost_multiplier": 2,
+      "capacity": 350,
+      "stalls": [
+        "stall_1",
+        "stall_2"
+      ]
+    },
+    "zone_2": {
+      "id": "zone_2",
+      "name": "Zone 2: Creator & Entertainment Hub",
+      "description": "Esports VR arenas, media creation studios & future mobility.",
+      "is_boosted": true,
+      "boost_multiplier": 2.5,
+      "capacity": 550,
+      "stalls": [
+        "stall_3",
+        "stall_4",
+        "stall_5"
+      ]
+    }
+  },
+  "stalls": {
+    "stall_1": {
+      "id": "stall_1",
+      "zone_id": "zone_1",
+      "name": "Stall 1 - HyperTech AI Showcase",
+      "sponsor_name": "HyperTech Systems",
+      "sponsor_category": "Cloud & AI Infrastructure",
+      "base_points": 50,
+      "live_headcount": 28,
+      "total_footfall": 215,
+      "capacity": 120,
+      "verified_scan_count": 215,
+      "unique_attendees": 198
+    },
+    "stall_2": {
+      "id": "stall_2",
+      "zone_id": "zone_1",
+      "name": "Stall 2 - NovaDynamics Robotics Lab",
+      "sponsor_name": "NovaDynamics",
+      "sponsor_category": "Autonomous Robotics",
+      "base_points": 50,
+      "live_headcount": 21,
+      "total_footfall": 168,
+      "capacity": 100,
+      "verified_scan_count": 168,
+      "unique_attendees": 154
+    },
+    "stall_3": {
+      "id": "stall_3",
+      "zone_id": "zone_2",
+      "name": "Stall 3 - SonicMedia Creator Studio",
+      "sponsor_name": "SonicMedia Studios",
+      "sponsor_category": "Audio & Digital Creation",
+      "base_points": 60,
+      "live_headcount": 47,
+      "total_footfall": 313,
+      "capacity": 150,
+      "verified_scan_count": 313,
+      "unique_attendees": 280
+    },
+    "stall_4": {
+      "id": "stall_4",
+      "zone_id": "zone_2",
+      "name": "Stall 4 - ApexPlay VR & Esports Arena",
+      "sponsor_name": "ApexPlay Interactive",
+      "sponsor_category": "Gaming & Immersive Tech",
+      "base_points": 75,
+      "live_headcount": 59,
+      "total_footfall": 384,
+      "capacity": 180,
+      "verified_scan_count": 384,
+      "unique_attendees": 342
+    },
+    "stall_5": {
+      "id": "stall_5",
+      "zone_id": "zone_2",
+      "name": "Stall 5 - VoltMotors Future Mobility",
+      "sponsor_name": "VoltMotors Global",
+      "sponsor_category": "EV & Clean Energy Tech",
+      "base_points": 50,
+      "live_headcount": 30,
+      "total_footfall": 246,
+      "capacity": 120,
+      "verified_scan_count": 246,
+      "unique_attendees": 228
+    }
+  },
+  "attendees": {
+    "PASS-ALEX-8821": {
+      "id": "a1111111-1111-1111-1111-111111111111",
+      "pass_id": "PASS-ALEX-8821",
+      "full_name": "Alex Rivera",
+      "email": "alex.rivera@example.com",
+      "role": "consumer",
+      "tier": "VIP All-Access",
+      "avatar_initials": "AR",
+      "points_balance": 555,
+      "lifetime_points": 795,
+      "checkin_count": 7
+    },
+    "PASS-PRIYA-4920": {
+      "id": "b2222222-2222-2222-2222-222222222222",
+      "pass_id": "PASS-PRIYA-4920",
+      "full_name": "Priya Sharma",
+      "email": "priya.sharma@example.com",
+      "role": "consumer",
+      "tier": "Standard Pass",
+      "avatar_initials": "PS",
+      "points_balance": 190,
+      "lifetime_points": 290,
+      "checkin_count": 3
+    },
+    "PASS-JORDAN-3104": {
+      "id": "c3333333-3333-3333-3333-333333333333",
+      "pass_id": "PASS-JORDAN-3104",
+      "full_name": "Jordan Lee",
+      "email": "jordan.lee@example.com",
+      "role": "consumer",
+      "tier": "Tech Explorer Pass",
+      "avatar_initials": "JL",
+      "points_balance": 125,
+      "lifetime_points": 175,
+      "checkin_count": 2
+    }
+  },
+  "rewards": [
+    {
+      "id": "rew_1",
+      "title": "HyperTech Limited Edition Swag Bag",
+      "sponsor": "HyperTech Systems",
+      "points_cost": 150,
+      "icon": "🎁",
+      "description": "Branded thermal bottle, embroidered tech pouch & sticker bundle.",
+      "stock": 38
+    },
+    {
+      "id": "rew_2",
+      "title": "ApexPlay VIP Gaming Fast-Track Pass",
+      "sponsor": "ApexPlay Interactive",
+      "points_cost": 250,
+      "icon": "🎮",
+      "description": "Skip the line at VR flight simulators + complimentary energy drink.",
+      "stock": 18
+    },
+    {
+      "id": "rew_3",
+      "title": "SonicMedia Studio Sampler & Pass",
+      "sponsor": "SonicMedia Studios",
+      "points_cost": 100,
+      "icon": "🎧",
+      "description": "Lossless master audio pack & 3-month creator cloud pass.",
+      "stock": 85
+    },
+    {
+      "id": "rew_4",
+      "title": "VoltMotors Espresso & Refreshment",
+      "sponsor": "VoltMotors Global",
+      "points_cost": 80,
+      "icon": "☕",
+      "description": "Fresh barista beverage and artisan snack at the EV lounge.",
+      "stock": 52
+    },
+    {
+      "id": "rew_5",
+      "title": "Grand Keynote Stage Raffle Entry",
+      "sponsor": "Event Curation Board",
+      "points_cost": 200,
+      "icon": "🎟️",
+      "description": "Golden ticket for the flagship stage gadget giveaway.",
+      "stock": 120
+    }
+  ],
+  "redemptions": [
+    {
+      "id": "red_demo_1",
+      "attendee_pass_id": "PASS-ALEX-8821",
+      "reward_id": "rew_4",
+      "reward_title": "VoltMotors Espresso & Refreshment",
+      "points_spent": 80,
+      "voucher_code": "VOLT-9472-EXP",
+      "status": "Active",
+      "timestamp": "2026-11-14T00:14:28.145Z"
+    }
+  ],
+  "checkins_log": [
+    {
+      "id": "chk_mwfqbckibp6q",
+      "attendee_pass_id": "PASS-ALEX-8821",
+      "attendee_name": "Alex Rivera",
+      "location_type": "main_gate",
+      "location_id": "main_gate",
+      "location_name": "Main Gate (Venue Entrance)",
+      "zone_id": null,
+      "zone_name": "Entry Portal",
+      "points_awarded": 25,
+      "was_boosted": false,
+      "multiplier": 1,
+      "timestamp": "2026-11-14T01:30:37.026Z"
+    },
+    {
+      "id": "chk_mwfpx6gspcpi",
+      "attendee_pass_id": "PASS-ALEX-8821",
+      "attendee_name": "Alex Rivera",
+      "location_type": "stall",
+      "location_id": "stall_3",
+      "location_name": "Stall 3 - SonicMedia Creator Studio",
+      "zone_id": "zone_2",
+      "zone_name": "Zone 2: Creator & Entertainment Hub",
+      "points_awarded": 150,
+      "was_boosted": true,
+      "multiplier": 2.5,
+      "timestamp": "2026-11-14T01:19:35.932Z"
+    },
+    {
+      "id": "chk_101",
+      "attendee_pass_id": "PASS-ALEX-8821",
+      "attendee_name": "Alex Rivera",
+      "location_type": "main_gate",
+      "location_id": "main_gate",
+      "location_name": "Main Gate (Venue Entrance)",
+      "zone_id": null,
+      "zone_name": "Entry Portal",
+      "points_awarded": 25,
+      "was_boosted": false,
+      "multiplier": 1,
+      "timestamp": "2026-11-13T23:14:28.146Z"
+    },
+    {
+      "id": "chk_102",
+      "attendee_pass_id": "PASS-ALEX-8821",
+      "attendee_name": "Alex Rivera",
+      "location_type": "stall",
+      "location_id": "stall_3",
+      "location_name": "Stall 3 - SonicMedia Creator Studio",
+      "zone_id": "zone_2",
+      "zone_name": "Zone 2 (Boosted)",
+      "points_awarded": 150,
+      "was_boosted": true,
+      "multiplier": 2.5,
+      "timestamp": "2026-11-13T23:54:28.146Z"
+    },
+    {
+      "id": "chk_103",
+      "attendee_pass_id": "PASS-PRIYA-4920",
+      "attendee_name": "Priya Sharma",
+      "location_type": "stall",
+      "location_id": "stall_1",
+      "location_name": "Stall 1 - HyperTech AI Showcase",
+      "zone_id": "zone_1",
+      "zone_name": "Zone 1",
+      "points_awarded": 50,
+      "was_boosted": false,
+      "multiplier": 1,
+      "timestamp": "2026-11-14T00:14:28.146Z"
+    },
+    {
+      "id": "chk_104",
+      "attendee_pass_id": "PASS-ALEX-8821",
+      "attendee_name": "Alex Rivera",
+      "location_type": "stall",
+      "location_id": "stall_4",
+      "location_name": "Stall 4 - ApexPlay VR & Esports Arena",
+      "zone_id": "zone_2",
+      "zone_name": "Zone 2 (Boosted)",
+      "points_awarded": 188,
+      "was_boosted": true,
+      "multiplier": 2.5,
+      "timestamp": "2026-11-14T00:54:28.146Z"
+    }
+  ]
+}
